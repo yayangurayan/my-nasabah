@@ -111,6 +111,7 @@
                 <th class="p-5 font-semibold">Entry / Exit</th>
                 <th class="p-5 font-semibold">Hasil</th>
                 <th class="p-5 font-semibold text-right">Pips</th>
+                <th class="p-5 font-semibold text-center">Aksi</th> <!-- TAMBAHAN HEADER AKSI -->
               </tr>
             </thead>
             <tbody class="text-sm">
@@ -123,7 +124,8 @@
                   <div :class="{
                     'bg-emerald-100/50 text-emerald-600 border-emerald-200': trade.result === 'Win',
                     'bg-rose-100/50 text-rose-600 border-rose-200': trade.result === 'Loss',
-                    'bg-slate-100 text-slate-600 border-slate-200': trade.result === 'BE'
+                    'bg-slate-100 text-slate-600 border-slate-200': trade.result === 'BE',
+                    'bg-amber-100 text-amber-600 border-amber-200': trade.result === 'Pending'
                   }" class="inline-flex px-3 py-1 rounded-full text-xs font-bold uppercase border">
                     {{ trade.result }}
                   </div>
@@ -131,9 +133,15 @@
                 <td :class="trade.pips >= 0 ? 'text-emerald-500' : 'text-rose-500'" class="p-5 font-black text-right text-base">
                   {{ trade.pips > 0 ? '+' : '' }}{{ trade.pips || 0 }}
                 </td>
+                <td class="p-5 text-center">
+                  <!-- TOMBOL DETAIL - TANPA TARGET BLANK -->
+                  <router-link :to="`/trade/${trade.id}`" class="text-indigo-600 hover:text-indigo-800 text-sm font-bold bg-indigo-50 hover:bg-indigo-100 px-4 py-2 rounded-lg transition-colors inline-block whitespace-nowrap border border-indigo-100">
+                    Detail &rarr;
+                  </router-link>
+                </td>
               </tr>
               <tr v-if="trades.length === 0">
-                <td colspan="6" class="p-12 text-center">
+                <td colspan="7" class="p-12 text-center"> <!-- UBAH COLSPAN KE 7 -->
                   <div class="flex flex-col items-center justify-center text-slate-400">
                     <svg class="w-12 h-12 mb-3 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
                     <p>Belum ada riwayat trading.</p>

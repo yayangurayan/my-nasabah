@@ -16,15 +16,21 @@
           <router-link to="/" class="hover:text-blue-300 font-medium transition">Beranda</router-link>
           <router-link to="/mapping" class="hover:text-blue-300 font-medium transition">Mapping Mingguan</router-link>
           
-          <!-- Dropdown Pairs (Desktop) -->
+          <!-- Dropdown Pairs (Desktop) - DIPERBAIKI -->
           <div class="group relative">
-            <button class="cursor-pointer hover:text-blue-300 font-medium transition flex items-center gap-1 focus:outline-none">
+            <!-- Tambahkan padding vertikal (py-2) pada tombol agar area sentuh/hover lebih luas -->
+            <button class="cursor-pointer hover:text-blue-300 font-medium transition flex items-center gap-1 focus:outline-none py-2">
               Dashboard Pairs ▾
             </button>
-            <div class="absolute hidden group-hover:block bg-white text-gray-800 mt-2 py-2 rounded-md shadow-xl overflow-hidden z-20 w-40 border border-gray-100">
-              <router-link to="/dashboard/gbpusd" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">GBPUSD</router-link>
-              <router-link to="/dashboard/gbpjpy" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">GBPJPY</router-link>
-              <router-link to="/dashboard/usdjpy" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">USDJPY</router-link>
+            
+            <!-- Wrapper tak terlihat dengan padding-top (pt-2) sebagai jembatan mouse -->
+            <div class="absolute left-0 top-full hidden group-hover:block pt-1 z-20 w-40">
+              <!-- Kotak Dropdown aslinya -->
+              <div class="bg-white text-gray-800 py-2 rounded-md shadow-xl overflow-hidden border border-gray-100">
+                <router-link to="/dashboard/gbpusd" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">GBPUSD</router-link>
+                <router-link to="/dashboard/gbpjpy" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">GBPJPY</router-link>
+                <router-link to="/dashboard/usdjpy" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">USDJPY</router-link>
+              </div>
             </div>
           </div>
           

@@ -1,6 +1,5 @@
 <template>
   <div class="max-w-6xl mx-auto">
-    <!-- TAMPILAN LOGIN -->
     <div v-if="!session" class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-md mt-10 border border-gray-100">
       <h2 class="text-2xl font-bold text-center text-blue-900 mb-6">Admin Login</h2>
       <form @submit.prevent="handleLogin" class="space-y-4">
@@ -18,7 +17,6 @@
       </form>
     </div>
 
-    <!-- TAMPILAN DASHBOARD -->
     <div v-else>
       <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4 mt-4">
         <h2 class="text-3xl font-bold text-gray-800">Admin Dashboard</h2>
@@ -34,7 +32,6 @@
         {{ message }}
       </div>
 
-      <!-- TAB TRADES -->
       <div v-if="activeTab === 'trades'" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-xl font-bold text-gray-800">Daftar Sinyal</h3>
@@ -46,15 +43,16 @@
             <thead class="bg-gray-50">
               <tr>
                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Tanggal</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Pair & Tipe</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Pair & Order</th> <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
                 <th class="px-6 py-3 text-right text-xs font-semibold text-gray-600 uppercase">Aksi</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
               <tr v-for="trade in trades" :key="trade.id" class="hover:bg-gray-50">
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ formatDate(trade.created_at) }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">{{ trade.pair }} <span class="font-normal text-gray-500">({{ trade.type }})</span></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
+                  {{ trade.pair }} 
+                  <span class="font-normal text-gray-500">({{ trade.type }} - {{ trade.order_type || 'N/A' }})</span> </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <span :class="{'bg-yellow-100 text-yellow-800': trade.result === 'Pending', 'bg-green-100 text-green-800': trade.result === 'Win', 'bg-red-100 text-red-800': trade.result === 'Loss', 'bg-gray-100 text-gray-800': trade.result === 'BE'}" class="px-3 py-1 text-xs font-bold rounded-full border border-gray-200">{{ trade.result }}</span>
                 </td>
@@ -69,7 +67,6 @@
         </div>
       </div>
 
-      <!-- TAB MAPPINGS -->
       <div v-if="activeTab === 'mappings'" class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-xl font-bold text-gray-800">Daftar Mapping Mingguan</h3>
@@ -103,7 +100,6 @@
       </div>
     </div>
 
-    <!-- MODAL TRADES -->
     <div v-if="showTradeModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 overflow-y-auto backdrop-blur-sm">
       <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6 my-8 border relative">
         <div class="flex justify-between items-center mb-6 border-b pb-3">
@@ -122,10 +118,19 @@
               <option value="Intraday">Intraday</option><option value="Swing">Swing</option>
             </select>
           </div>
+          
+          <div class="md:col-span-2"><label class="block text-sm font-semibold text-gray-700">Jenis Order</label>
+            <select v-model="tradeForm.order_type" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900">
+              <option value="Buy">Buy</option>
+              <option value="Sell">Sell</option>
+              <option value="Buy Limit">Buy Limit</option>
+              <option value="Sell Limit">Sell Limit</option>
+            </select>
+          </div>
+
           <div class="md:col-span-2"><label class="block text-sm font-semibold text-gray-700">Entry Price</label>
             <input v-model.number="tradeForm.entry_price" type="number" step="0.00001" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900" />
           </div>
-          <!-- INPUT BARU SL & TP -->
           <div><label class="block text-sm font-semibold text-gray-700">Stop Loss (SL)</label>
             <input v-model.number="tradeForm.stop_loss" type="number" step="0.00001" class="mt-1 block w-full px-3 py-2 border border-red-300 rounded-md bg-red-50 text-gray-900" />
           </div>
@@ -162,7 +167,6 @@
       </div>
     </div>
 
-    <!-- MODAL MAPPING -->
     <div v-if="showMappingModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 overflow-y-auto backdrop-blur-sm">
       <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-6 my-8 border">
         <div class="flex justify-between items-center mb-6 border-b pb-3">
@@ -202,7 +206,8 @@ const loading = ref(false); const message = ref(''); const messageType = ref('')
 const activeTab = ref('trades'); const trades = ref([]); const mappings = ref([]);
 
 const showTradeModal = ref(false); const isEditingTrade = ref(false);
-const tradeForm = ref({ id: null, pair: 'GBPUSD', type: 'Intraday', entry_price: null, stop_loss: null, take_profit: null, exit_price: null, pips: null, result: 'Pending', rr_ratio: null, percentage: null, note: '' })
+// UPDATE PAYLOAD DEFAULT
+const tradeForm = ref({ id: null, pair: 'GBPUSD', type: 'Intraday', order_type: 'Buy', entry_price: null, stop_loss: null, take_profit: null, exit_price: null, pips: null, result: 'Pending', rr_ratio: null, percentage: null, note: '' })
 
 const showMappingModal = ref(false); const isEditingMapping = ref(false);
 const mappingForm = ref({ id: null, pair: 'GBPUSD', title: '', description: '', image_url: null })
@@ -224,9 +229,8 @@ const showMessage = (msg, type = 'success') => { message.value = msg; messageTyp
 
 // --- INTEGRASI WA FONNTE ---
 const sendWhatsAppNotification = async (msgText, imageUrl = null) => {
-  // PENTING: Anda harus men-set VITE_FONNTE_TOKEN dan VITE_WA_GROUP_ID di file .env
   const token = import.meta.env.VITE_FONNTE_TOKEN;
-  const target = import.meta.env.VITE_WA_GROUP_ID; // Masukkan ID Grup atau No HP
+  const target = import.meta.env.VITE_WA_GROUP_ID; 
   
   if (!token || !target) {
     console.warn("Kredensial Fonnte WA belum diatur di .env. Skip kirim WA.");
@@ -236,7 +240,7 @@ const sendWhatsAppNotification = async (msgText, imageUrl = null) => {
   const formData = new FormData();
   formData.append('target', target);
   formData.append('message', msgText);
-  if (imageUrl) formData.append('url', imageUrl); // Kirim gambar jika ada
+  if (imageUrl) formData.append('url', imageUrl);
 
   try {
     await fetch('https://api.fonnte.com/send', {
@@ -254,13 +258,14 @@ const sendWhatsAppNotification = async (msgText, imageUrl = null) => {
 const fetchTrades = async () => { const { data } = await supabase.from('trades').select('*').order('created_at', { ascending: false }); trades.value = data || [] }
 const openTradeModal = (trade = null) => {
   if (trade) { isEditingTrade.value = true; tradeForm.value = { ...trade } } 
-  else { isEditingTrade.value = false; tradeForm.value = { id: null, pair: 'GBPUSD', type: 'Intraday', entry_price: null, stop_loss: null, take_profit: null, exit_price: null, pips: null, result: 'Pending', rr_ratio: null, percentage: null, note: '' } }
+  else { isEditingTrade.value = false; tradeForm.value = { id: null, pair: 'GBPUSD', type: 'Intraday', order_type: 'Buy', entry_price: null, stop_loss: null, take_profit: null, exit_price: null, pips: null, result: 'Pending', rr_ratio: null, percentage: null, note: '' } }
   showTradeModal.value = true;
 }
 const saveTrade = async () => {
   loading.value = true;
   try {
-    const payload = { pair: tradeForm.value.pair, type: tradeForm.value.type, entry_price: tradeForm.value.entry_price, stop_loss: tradeForm.value.stop_loss || null, take_profit: tradeForm.value.take_profit || null, exit_price: tradeForm.value.exit_price || null, pips: tradeForm.value.pips || null, result: tradeForm.value.result, rr_ratio: tradeForm.value.rr_ratio || null, percentage: tradeForm.value.percentage || null, note: tradeForm.value.note }
+    // UPDATE PAYLOAD SIMPAN
+    const payload = { pair: tradeForm.value.pair, type: tradeForm.value.type, order_type: tradeForm.value.order_type, entry_price: tradeForm.value.entry_price, stop_loss: tradeForm.value.stop_loss || null, take_profit: tradeForm.value.take_profit || null, exit_price: tradeForm.value.exit_price || null, pips: tradeForm.value.pips || null, result: tradeForm.value.result, rr_ratio: tradeForm.value.rr_ratio || null, percentage: tradeForm.value.percentage || null, note: tradeForm.value.note }
     
     if (isEditingTrade.value) {
       await supabase.from('trades').update(payload).eq('id', tradeForm.value.id);
@@ -271,8 +276,8 @@ const saveTrade = async () => {
       
       showMessage('Sinyal baru berhasil disimpan! WA sedang dikirim...');
       
-      // AUTO SEND WA KETIKA INSERT
-      const waMsg = `🚨 *SINYAL BARU MY NASABAH* 🚨\n\nPair: *${payload.pair}*\nTipe: *${payload.type}*\nEntry: *${payload.entry_price}*\nSL: *${payload.stop_loss || '-'}*\nTP: *${payload.take_profit || '-'}*\n\nCatatan:\n_${payload.note || '-'}_`;
+      // AUTO SEND WA KETIKA INSERT (DITAMBAHKAN ORDER TYPE)
+      const waMsg = `🚨 *SINYAL BARU MY NASABAH* 🚨\n\nPair: *${payload.pair}*\nTipe: *${payload.type}*\nOrder: *${payload.order_type}*\nEntry: *${payload.entry_price}*\nSL: *${payload.stop_loss || '-'}*\nTP: *${payload.take_profit || '-'}*\n\nCatatan:\n_${payload.note || '-'}_`;
       await sendWhatsAppNotification(waMsg);
     }
     showTradeModal.value = false; fetchTrades();
@@ -301,10 +306,8 @@ const saveMapping = async () => {
     } else {
       await supabase.from('mappings').insert([payload]);
       showMessage('Mapping disimpan! WA sedang dikirim...');
-
-      // AUTO SEND WA KETIKA INSERT MAPPING
       const waMsg = `📊 *MAPPING BARU MY NASABAH* 📊\n\nPair: *${payload.pair}*\nJudul: *${payload.title}*\n\nDeskripsi:\n_${payload.description || '-'}_`;
-      await sendWhatsAppNotification(waMsg, finalImageUrl); // Kirim gambar mapping juga!
+      await sendWhatsAppNotification(waMsg, finalImageUrl);
     }
     showMappingModal.value = false; fetchMappings();
   } catch (e) { showMessage('Gagal mapping: '+e.message, 'error') } finally { loading.value = false }
