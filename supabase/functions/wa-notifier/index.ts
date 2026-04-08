@@ -1,10 +1,11 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+// Kita hapus baris import yang bermasalah, karena kita akan pakai Deno.serve() bawaan!
 
 // GANTI DENGAN KREDENSIAL FONNTE KAMU
 const FONNTE_TOKEN = "thwSvJEe9ozNHEPc6CJi"
 const TARGET_WA = "120363425139174430@g.us" // Masukkan nomor HP testing atau ID Group Fonnte
 
-serve(async (req) => {
+// 1 & 2. Memakai Deno.serve dan menambahkan tipe ": Request" pada req
+Deno.serve(async (req: Request) => {
   try {
     // Tangkap data yang dikirim oleh Webhook Supabase
     const payload = await req.json()
@@ -56,7 +57,11 @@ serve(async (req) => {
     const result = await response.json()
     return new Response(JSON.stringify(result), { headers: { "Content-Type": "application/json" } })
 
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  // 3. Mengubah 'error' menjadi tipe 'any' agar tidak dibaca 'unknown'
+  } catch (err: any) {
+    return new Response(
+      JSON.stringify({ error: err.message || "Terjadi kesalahan sistem" }), 
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    )
   }
 })
