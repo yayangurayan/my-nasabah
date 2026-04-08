@@ -5,11 +5,11 @@
       <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
       <div class="relative z-10">
         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Performa Sinyal</h2>
-        <p class="text-indigo-200 mt-2 text-lg">Transparansi total hasil trading All Pairs oleh Andrian.</p>
+        <p class="text-indigo-200 mt-2 text-lg">Transparansi total hasil trading All Pairs oleh Group My Nasabah.</p>
       </div>
       <div class="relative z-10 bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20 flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-sm font-medium">Sistem Live Terhubung</span>
+        <span class="text-sm font-medium">Sistem Live Acc Terhubung</span>
       </div>
     </div>
 
