@@ -1,7 +1,7 @@
 // Kita hapus baris import yang bermasalah, karena kita akan pakai Deno.serve() bawaan!
 
 // GANTI DENGAN KREDENSIAL FONNTE KAMU
-const FONNTE_TOKEN = "thwSvJEe9ozNHEPc6CJi"
+const FONNTE_TOKEN = "Jpo27Y5Ty3J83Hzrcrmz"
 const TARGET_WA = "120363425139174430@g.us" // Masukkan nomor HP testing atau ID Group Fonnte
 
 // 1 & 2. Memakai Deno.serve dan menambahkan tipe ": Request" pada req
