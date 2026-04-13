@@ -110,7 +110,7 @@
         <form @submit.prevent="saveTrade" class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div><label class="block text-sm font-semibold text-gray-700">Pair Mata Uang</label>
             <select v-model="tradeForm.pair" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-900">
-              <option value="GBPUSD">GBPUSD</option><option value="GBPJPY">GBPJPY</option><option value="USDJPY">USDJPY</option>
+              <option value="GBPUSD">GBPUSD</option><option value="USDCHF">USDCHF</option><option value="XAUUSD">XAUUSD</option>
             </select>
           </div>
           <div><label class="block text-sm font-semibold text-gray-700">Tipe Trading</label>
@@ -175,7 +175,7 @@
         </div>
         <form @submit.prevent="saveMapping" class="space-y-5">
           <div><label class="block text-sm font-semibold">Pair Mata Uang</label>
-            <select v-model="mappingForm.pair" required class="mt-1 block w-full px-3 py-2 border rounded-md bg-white text-gray-900"><option value="GBPUSD">GBPUSD</option><option value="GBPJPY">GBPJPY</option><option value="USDJPY">USDJPY</option></select>
+            <select v-model="mappingForm.pair" required class="mt-1 block w-full px-3 py-2 border rounded-md bg-white text-gray-900"><option value="GBPUSD">GBPUSD</option><option value="USDCHF">USDCHF</option><option value="XAUUSD">XAUUSD</option></select>
           </div>
           <div><label class="block text-sm font-semibold">Judul</label>
             <input v-model="mappingForm.title" type="text" required class="mt-1 block w-full px-3 py-2 border rounded-md bg-white text-gray-900" />

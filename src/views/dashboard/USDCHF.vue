@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-8 flex items-center gap-3">
-      <h2 class="text-3xl font-bold text-blue-900">Performa GBPJPY</h2>
+      <h2 class="text-3xl font-bold text-blue-900">Performa USDCHF</h2>
       <span class="bg-blue-100 text-blue-800 text-sm font-bold px-3 py-1 rounded-full">Dashboard Pair Spesifik</span>
     </div>
 
@@ -16,7 +16,7 @@
     <div v-else>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <p class="text-sm text-gray-500 font-medium mb-1">Total Pips GBPJPY</p>
+          <p class="text-sm text-gray-500 font-medium mb-1">Total Pips USDCHF</p>
           <p :class="totalPips >= 0 ? 'text-green-600' : 'text-red-600'" class="text-3xl font-bold">
             {{ totalPips > 0 ? '+' : '' }}{{ totalPips }}
           </p>
@@ -38,7 +38,7 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 class="text-lg font-bold text-gray-800 mb-4">Equity Curve GBPJPY</h3>
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Equity Curve USDCHF</h3>
           <div class="h-64"><Line :data="equityChartData" :options="chartOptions" /></div>
         </div>
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
@@ -58,8 +58,8 @@ import { Line, Bar } from 'vue-chartjs'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler)
 
-// Perhatikan parameter di sini adalah 'GBPJPY'
-const { trades, loading, errorMsg, fetchTrades, totalTrades, totalPips, winRate, profitFactor, avgRR, equityChartData, monthlyChartData } = useDashboard('GBPJPY')
+// Perhatikan parameter di sini adalah 'USDCHF'
+const { trades, loading, errorMsg, fetchTrades, totalTrades, totalPips, winRate, profitFactor, avgRR, equityChartData, monthlyChartData } = useDashboard('USDCHF')
 
 onMounted(() => fetchTrades())
 

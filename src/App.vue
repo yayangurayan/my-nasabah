@@ -28,8 +28,8 @@
               <!-- Kotak Dropdown aslinya -->
               <div class="bg-white text-gray-800 py-2 rounded-md shadow-xl overflow-hidden border border-gray-100">
                 <router-link to="/dashboard/gbpusd" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">GBPUSD</router-link>
-                <router-link to="/dashboard/gbpjpy" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">GBPJPY</router-link>
-                <router-link to="/dashboard/usdjpy" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">USDJPY</router-link>
+                <router-link to="/dashboard/USDCHF" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">USDCHF</router-link>
+                <router-link to="/dashboard/XAUUSD" class="block px-5 py-2 hover:bg-gray-100 transition font-medium">XAUUSD</router-link>
               </div>
             </div>
           </div>
@@ -77,8 +77,8 @@
               
               <div v-show="isMobilePairsOpen" class="bg-blue-900 rounded-md mt-1 overflow-hidden mx-2 shadow-inner">
                 <router-link to="/dashboard/gbpusd" @click="closeMobileMenu" class="block px-6 py-3 hover:bg-blue-700 text-sm font-medium border-b border-blue-800">GBPUSD</router-link>
-                <router-link to="/dashboard/gbpjpy" @click="closeMobileMenu" class="block px-6 py-3 hover:bg-blue-700 text-sm font-medium border-b border-blue-800">GBPJPY</router-link>
-                <router-link to="/dashboard/usdjpy" @click="closeMobileMenu" class="block px-6 py-3 hover:bg-blue-700 text-sm font-medium">USDJPY</router-link>
+                <router-link to="/dashboard/USDCHF" @click="closeMobileMenu" class="block px-6 py-3 hover:bg-blue-700 text-sm font-medium border-b border-blue-800">USDCHF</router-link>
+                <router-link to="/dashboard/XAUUSD" @click="closeMobileMenu" class="block px-6 py-3 hover:bg-blue-700 text-sm font-medium">XAUUSD</router-link>
               </div>
             </div>
 
